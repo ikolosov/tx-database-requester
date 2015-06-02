@@ -9,11 +9,11 @@ import java.math.BigDecimal;
  */
 public interface IContainerService {
 
-	boolean storeContainer(IContainer container);
+	void storeContainer(IContainer container);
 
-	void moveValue(IContainer from,
-				   IContainer to,
-				   BigDecimal value);
+	void transferData(IContainer from,
+					  IContainer to,
+					  BigDecimal value);
 
 	IContainer getContainer(int id);
 }

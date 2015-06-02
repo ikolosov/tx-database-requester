@@ -15,9 +15,7 @@ public interface IContainer {
 
 	BigDecimal getValue();
 
-	void decreaseValue(BigDecimal value);
-
-	void increaseValue(BigDecimal value);
+	void setValue(BigDecimal value);
 
 	void printStatus();
 

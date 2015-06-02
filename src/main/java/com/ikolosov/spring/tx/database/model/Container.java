@@ -33,13 +33,8 @@ public class Container implements IContainer {
 	}
 
 	@Override
-	public void decreaseValue(BigDecimal amount) {
-		value = value.subtract(amount);
-	}
-
-	@Override
-	public void increaseValue(BigDecimal amount) {
-		value = value.add(amount);
+	public void setValue(BigDecimal value) {
+		this.value = value;
 	}
 
 	@Override

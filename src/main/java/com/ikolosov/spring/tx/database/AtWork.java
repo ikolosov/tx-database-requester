@@ -19,28 +19,30 @@ public class AtWork {
 	public static void main(String[] args) {
 		// [] app context init
 		ApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
-		IContainerService service = (IContainerService) context.getBean("service");
+		IContainerService service = (IContainerService) context.getBean("containerService");
 		// [] step #1: two containers created
-		System.out.println("step #1: containers creation -----");
+		System.out.println("\nstep #1: containers creation -----");
 		service.storeContainer(containerOne);
 		service.storeContainer(containerTwo);
 		printStatus(service);
 		// [] step #2: data transfer between containers (success case, transaction commit should take place)
-		System.out.println("step #2: success case data transfer (with tx commit) -----");
-		service.moveValue(
+		System.out.println("\nstep #2: success case data transfer (with tx commit) -----");
+		service.transferData(
 				containerOne,
 				containerTwo,
 				new BigDecimal(10));
 		printStatus(service);
 		// [] step #3: data transfer between containers (failure case, transaction rollback should take place)
-		System.out.println("step #3: failure case data transfer (with tx rollback) -----");
+		System.out.println("\nstep #3: failure case data transfer (with expected tx rollback) -----");
 		try {
-			service.moveValue(
+			service.transferData(
 					containerOne,
 					new Container(3, "non-existent container", new BigDecimal(0)),
 					new BigDecimal(10));
 		} catch (Exception e) {
-			System.out.println("exception was caught\n" + e.getMessage() + "\ntransaction rollback will occur");
+			System.out.println("Exception was caught:"
+					+ "\n\tClass: " + e.getClass().getSimpleName()
+					+ "\n\tMessage: " + e.getMessage() + "\nTransaction rollback will occur\n");
 		}
 		printStatus(service);
 	}

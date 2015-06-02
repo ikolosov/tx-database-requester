@@ -11,7 +11,7 @@ public class ContainerDao extends JdbcDaoSupport implements IContainerDao<IConta
 
 	@Override
 	public boolean insert(IContainer container) {
-		String insertSql = "INSERT INTO T_CONTAINERS (ID, DESCR, VAL) VALUES(?, ?, ?)";
+		String insertSql = "insert into T_CONTAINERS (ID, DESCR, VAL) values (?, ?, ?)";
 		return getJdbcTemplate().update(
 				insertSql,
 				container.getId(),
@@ -21,7 +21,7 @@ public class ContainerDao extends JdbcDaoSupport implements IContainerDao<IConta
 
 	@Override
 	public IContainer select(int id) {
-		String selectSql = "SELECT * FROM T_CONTAINERS WHERE ID = ?";
+		String selectSql = "select * from T_CONTAINERS where ID = ?";
 		return getJdbcTemplate().queryForObject(
 				selectSql,
 				new Object[]{id},
@@ -30,13 +30,14 @@ public class ContainerDao extends JdbcDaoSupport implements IContainerDao<IConta
 
 	@Override
 	public boolean update(IContainer container) {
-		String updateSql = "UPDATE T_CONTAINERS SET VAL = ? where ID = ?";
+		String updateSql = "update T_CONTAINERS set VAL = ? where ID = ?";
 		/**
 		 * []
-		 * this dummy exception is to emulate execution failure
+		 * this dummy exception is to emulate execution failure;
+		 * 'magic number' id that causes a failure is 3
 		 */
 		if (container.getId() == 3)
-			throw new RuntimeException("Dummy exception that should trigger transaction rollback");
+			throw new RuntimeException("This is dummy exception has to trigger transaction rollback");
 		return getJdbcTemplate().update(
 				updateSql,
 				container.getValue(),
@@ -45,7 +46,7 @@ public class ContainerDao extends JdbcDaoSupport implements IContainerDao<IConta
 
 	@Override
 	public boolean delete(IContainer container) {
-		String deleteSql = "DELETE FROM T_CONTAINERS WHERE ID = ?";
+		String deleteSql = "delete from T_CONTAINERS where ID = ?";
 		return getJdbcTemplate().update(
 				deleteSql,
 				container.getId()) > 0;
@@ -59,15 +60,15 @@ public class ContainerDao extends JdbcDaoSupport implements IContainerDao<IConta
 	private void init() {
 		try {
 			String ddlStatement =
-					"DECLARE\n" +
-					"  cnt NUMBER;\n" +
-					"BEGIN\n" +
-					"  SELECT count(*) INTO cnt FROM all_tables WHERE table_name = 'T_CONTAINERS';\n" +
-					"  IF cnt <> 0 THEN\n" +
-					"    EXECUTE IMMEDIATE 'DROP TABLE T_CONTAINERS';\n" +
-					"  END IF;\n" +
-					"  EXECUTE IMMEDIATE 'CREATE TABLE T_CONTAINERS (ID NUMBER(3), DESCR VARCHAR(255), VAL NUMBER(12,2))';\n" +
-					"END;\n";
+					"declare\n" +
+					"  cnt number;\n" +
+					"begin\n" +
+					"  select count(*) into cnt from all_tables where table_name = 'T_CONTAINERS';\n" +
+					"  if cnt <> 0 then\n" +
+					"    execute immediate 'drop table T_CONTAINERS';\n" +
+					"  end if;\n" +
+					"  execute immediate 'create table T_CONTAINERS (ID number(3), DESCR varchar2(255), VAL number(12,2))';\n" +
+					"end;\n";
 			getJdbcTemplate().execute(ddlStatement);
 		} catch (DataAccessException dae) {
 			dae.printStackTrace();

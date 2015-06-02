@@ -22,15 +22,15 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="dao"
+    <bean id="containerDao"
           class="com.ikolosov.spring.tx.database.dao.ContainerDao"
           init-method="init">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 
-    <bean id="service"
+    <bean id="containerService"
           class="com.ikolosov.spring.tx.database.service.ContainerService">
-        <constructor-arg name="containerDao" ref="dao"/>
+        <constructor-arg name="containerDao" ref="containerDao"/>
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
