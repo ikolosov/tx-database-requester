@@ -42,12 +42,13 @@ public class AtWork {
 		} catch (Exception e) {
 			System.out.println("Exception was caught:"
 					+ "\n\tClass: " + e.getClass().getSimpleName()
-					+ "\n\tMessage: " + e.getMessage() + "\nTransaction rollback will occur\n");
+					+ "\n\tMessage: " + e.getMessage());
 		}
 		printStatus(service);
 	}
 
 	private static void printStatus(IContainerService service) {
+		System.out.println("Current status:");
 		service.getContainer(containerOne.getId()).printStatus();
 		service.getContainer(containerTwo.getId()).printStatus();
 	}

@@ -37,7 +37,7 @@ public class ContainerDao extends JdbcDaoSupport implements IContainerDao<IConta
 		 * 'magic number' id that causes a failure is 3
 		 */
 		if (container.getId() == 3)
-			throw new RuntimeException("This is dummy exception has to trigger transaction rollback");
+			throw new RuntimeException("This dummy exception has to trigger transaction rollback");
 		return getJdbcTemplate().update(
 				updateSql,
 				container.getValue(),
@@ -54,7 +54,7 @@ public class ContainerDao extends JdbcDaoSupport implements IContainerDao<IConta
 
 	/**
 	 * []
-	 * ddl statement that re-creates corresponding database table;
+	 * ddl statement that re-creates database model - T_CONTAINERS table;
 	 * its execution is to be triggered at bean init-time
 	 */
 	private void init() {
