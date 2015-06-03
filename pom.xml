@@ -7,6 +7,10 @@
     <artifactId>tx-database-requester</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+	<url>
+        http://ikolosov.com/2015/06/03/declarative-transactions-with-spring/
+    </url>
+	
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.1.6.RELEASE</spring.version>
